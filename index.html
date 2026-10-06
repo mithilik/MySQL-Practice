@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SQL Practice – student_table</title>
+<style>
+:root{--bg:#f6f7fb;--card:#fff;--tx:#1b2030;--mu:#667;--ac:#3b5bdb;--ok:#2b8a3e;--bd:#e1e4ee;--code:#0f172a;--codetx:#e2e8f0;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#10131c;--card:#181c28;--tx:#e8eaf2;--mu:#9aa3b8;--ac:#7c97ff;--ok:#51cf66;--bd:#2a3042;--code:#0a0d14}}
+:root[data-theme="dark"]{--bg:#10131c;--card:#181c28;--tx:#e8eaf2;--mu:#9aa3b8;--ac:#7c97ff;--ok:#51cf66;--bd:#2a3042;--code:#0a0d14}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+.w{max-width:860px;margin:0 auto;padding:20px 16px 60px}
+h1{margin:0 0 4px;font-size:1.7rem}.sub{color:var(--mu);margin:0 0 16px}
+.bar{height:10px;background:var(--bd);border-radius:9px;overflow:hidden}.bar i{display:block;height:100%;width:0;background:var(--ok);transition:width .3s}
+.stat{display:flex;justify-content:space-between;color:var(--mu);font-size:.85rem;margin:6px 0 14px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:14px;margin-bottom:12px}
+.scroll{overflow-x:auto}table{border-collapse:collapse;width:100%;font-size:.88rem}th,td{padding:6px 10px;border-bottom:1px solid var(--bd);text-align:left;white-space:nowrap}th{color:var(--mu)}
+.tools{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+input[type=search]{flex:1;min-width:160px;padding:9px 12px;border:1px solid var(--bd);border-radius:9px;background:var(--card);color:var(--tx);font:inherit}
+button{font:inherit;cursor:pointer;border:1px solid var(--bd);background:var(--card);color:var(--tx);padding:7px 12px;border-radius:9px}
+button:hover{border-color:var(--ac)}button.p{background:var(--ac);border-color:var(--ac);color:#fff}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}.chip.on{background:var(--ac);color:#fff;border-color:var(--ac)}
+.q{display:flex;gap:10px;align-items:flex-start}.n{background:var(--ac);color:#fff;border-radius:8px;min-width:32px;text-align:center;font-weight:600;padding:2px 0}
+.q p{margin:0;flex:1}.tag{font-size:.72rem;color:var(--mu)}
+.done{border-left:4px solid var(--ok)}
+textarea{width:100%;min-height:70px;margin-top:10px;padding:10px;border:1px solid var(--bd);border-radius:9px;background:var(--bg);color:var(--tx);font:14px/1.4 ui-monospace,Menlo,Consolas,monospace}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+pre{background:var(--code);color:var(--codetx);padding:12px;border-radius:9px;overflow-x:auto;margin:10px 0 0;font:13.5px/1.5 ui-monospace,Menlo,Consolas,monospace}
+.msg{margin-top:8px;font-size:.9rem}.good{color:var(--ok)}.warn{color:#e67700}.bad{color:#e03131}
+details summary{cursor:pointer;font-weight:600}
+.note{font-size:.85rem;color:var(--mu)}
+</style></head><body><div class="w">
+<h1>🗄️ SQL Practice: student_table</h1>
+<p class="sub">35 questions · try writing the query yourself, check it, then reveal the answer. (MySQL syntax)</p>
+<div class="bar"><i id="pb"></i></div>
+<div class="stat"><span id="pt">0 / 35 mastered</span><button id="rs" style="padding:2px 8px;font-size:.8rem">Reset progress</button></div>
+
+<div class="card"><details open><summary>📋 Table structure &amp; sample data</summary>
+<p class="note"><b>Table: student_table</b><br><b>Fields:</b> <b>stuid</b> INT · <b>name</b> VARCHAR(30) · <b>address</b> VARCHAR(50) · <b>city</b> VARCHAR(20) · <b>marks</b> INT · <b>course</b> VARCHAR(20)</p>
+<div class="scroll"><table><tr><th>stuid</th><th>name</th><th>address</th><th>city</th><th>marks</th><th>course</th></tr>
+<tr><td>1</td><td>Divya</td><td>Main Road</td><td>Curchorem</td><td>92</td><td>CT</td></tr>
+<tr><td>5</td><td>Ashwin</td><td>Station Road</td><td>Sanguem</td><td>85</td><td>Commerce</td></tr>
+<tr><td>10</td><td>Diena</td><td>Church Street</td><td>Calcutta</td><td>65</td><td>Science</td></tr>
+<tr><td>15</td><td>Sufiyan</td><td>Pontemol</td><td>Curchorem</td><td>78</td><td>CT</td></tr>
+<tr><td>20</td><td>Andric</td><td>College Road</td><td>Sanguem</td><td>55</td><td>Science</td></tr></table></div></details></div>
+
+<div class="card"><details><summary>⚡ Quick revision cheat sheet</summary>
+<pre>SELECT col FROM t WHERE cond GROUP BY col HAVING cond ORDER BY col [ASC|DESC] LIMIT n;
+INSERT INTO t VALUES (...);   UPDATE t SET col=val WHERE cond;   DELETE FROM t WHERE cond;
+ALTER TABLE t ADD col type | DROP COLUMN col | MODIFY col type;
+BETWEEN a AND b · IN (..) · LIKE 'A%' · &lt;&gt; (not equal) · DISTINCT
+COUNT() · SUM() · AVG() · MIN() · MAX()
+CREATE TABLE new AS SELECT * FROM old;  DROP TABLE t;  RENAME TABLE a TO b;  DESC t;</pre>
+<p class="note">Remember: WHERE filters rows before grouping; HAVING filters groups after.</p></details></div>
+
+<div class="tools"><input type="search" id="s" placeholder="Search questions or keywords…"><button id="sh">🔀 Shuffle</button><button id="hd">Hide done</button></div>
+<div class="chips" id="chips"></div>
+<div id="list"></div>
+</div>
+<script>
+const Q=[
+[1,"Create Table","Create a table named student_table with: stuid INT, name VARCHAR(30), address VARCHAR(50), city VARCHAR(20), marks INT, course VARCHAR(20).","CREATE TABLE student_table\n(\n    stuid INT,\n    name VARCHAR(30),\n    address VARCHAR(50),\n    city VARCHAR(20),\n    marks INT,\n    course VARCHAR(20)\n);"],
+[2,"Create Table","Insert the 5 sample records (shown above) into student_table.","INSERT INTO student_table\nVALUES\n(1, 'Divya', 'Main Road', 'Curchorem', 92, 'CT'),\n(5, 'Ashwin', 'Station Road', 'Sanguem', 85, 'Commerce'),\n(10, 'Diena', 'Church Street', 'Calcutta', 65, 'Science'),\n(15, 'Sufiyan', 'Pontemol', 'Curchorem', 78, 'CT'),\n(20, 'Andric', 'College Road', 'Sanguem', 55, 'Science');"],
+[3,"SELECT","Display all records from the table.","SELECT * FROM student_table;"],
+[4,"SELECT","Display the names and marks of all students.","SELECT name, marks\nFROM student_table;"],
+[5,"Filtering","Display students whose marks are between 60 and 80.","SELECT *\nFROM student_table\nWHERE marks BETWEEN 60 AND 80;"],
+[6,"Filtering","Display students who belong to either Curchorem or Sanguem.","SELECT *\nFROM student_table\nWHERE city IN ('Curchorem', 'Sanguem');"],
+[7,"SELECT","Display students who have taken the Science course.","SELECT *\nFROM student_table\nWHERE course = 'Science';"],
+[8,"SELECT","Display students whose marks are greater than 70.","SELECT *\nFROM student_table\nWHERE marks > 70;"],
+[9,"Sorting & Limit","Display the names of students in alphabetical order.","SELECT name\nFROM student_table\nORDER BY name ASC;"],
+[10,"Sorting & Limit","Display all students in descending order of their marks.","SELECT *\nFROM student_table\nORDER BY marks DESC;"],
+[11,"SELECT","Display the different courses available in the table.","SELECT DISTINCT course\nFROM student_table;"],
+[12,"Filtering","Display students whose names start with the letter A.","SELECT *\nFROM student_table\nWHERE name LIKE 'A%';"],
+[13,"Aggregates","Count the total number of students.","SELECT COUNT(*) AS Total_Students\nFROM student_table;"],
+[14,"Group By","Count the number of students in each course.","SELECT course, COUNT(*) AS Total_Students\nFROM student_table\nGROUP BY course;"],
+[15,"Group By","Display only those courses in which more than one student is enrolled.","SELECT course, COUNT(*) AS Total_Students\nFROM student_table\nGROUP BY course\nHAVING COUNT(*) > 1;"],
+[16,"Sorting & Limit","Display the first 3 records from the table.","SELECT *\nFROM student_table\nLIMIT 3;"],
+[17,"Filtering","Display the names and marks of students who scored between 60 and 80.","SELECT name, marks\nFROM student_table\nWHERE marks BETWEEN 60 AND 80;"],
+[18,"Update & Delete","Change the city name from Calcutta to Kolkata.","UPDATE student_table\nSET city = 'Kolkata'\nWHERE city = 'Calcutta';"],
+[19,"Update & Delete","Increase the marks of students by 5 only if their course is Science.","UPDATE student_table\nSET marks = marks + 5\nWHERE course = 'Science';"],
+[20,"Alter & Tables","Add a new field pincode (VARCHAR, size 8) after the city field.","ALTER TABLE student_table\nADD pincode VARCHAR(8)\nAFTER city;"],
+[21,"Update & Delete","Delete the record whose student ID is 10.","DELETE FROM student_table\nWHERE stuid = 10;"],
+[22,"Alter & Tables","Remove the address field from the table.","ALTER TABLE student_table\nDROP COLUMN address;"],
+[23,"Alter & Tables","Copy the complete student_table into a new table called student_backup.","CREATE TABLE student_backup\nAS\nSELECT *\nFROM student_table;"],
+[24,"Alter & Tables","Remove the table student_backup.","DROP TABLE student_backup;"],
+[25,"Alter & Tables","Display the structure of student_table.","DESC student_table;"],
+[26,"Alter & Tables","Change the table name from student_table to student_master.","RENAME TABLE student_table\nTO student_master;"],
+[27,"Alter & Tables","Change the datatype of the name field to VARCHAR(40).","ALTER TABLE student_table\nMODIFY name VARCHAR(40);"],
+[28,"Filtering","Display students who are from Curchorem and have marks greater than 70.","SELECT *\nFROM student_table\nWHERE city = 'Curchorem'\nAND marks > 70;"],
+[29,"Filtering","Display students who are not from Sanguem.","SELECT *\nFROM student_table\nWHERE city <> 'Sanguem';"],
+[30,"Filtering","Display students whose marks are not between 60 and 80.","SELECT *\nFROM student_table\nWHERE marks NOT BETWEEN 60 AND 80;"],
+[31,"Aggregates","Display the highest marks obtained by a student.","SELECT MAX(marks) AS Highest_Marks\nFROM student_table;"],
+[32,"Aggregates","Display the lowest marks obtained by a student.","SELECT MIN(marks) AS Lowest_Marks\nFROM student_table;"],
+[33,"Aggregates","Display the average marks of all students.","SELECT AVG(marks) AS Average_Marks\nFROM student_table;"],
+[34,"Aggregates","Display the total marks of all students.","SELECT SUM(marks) AS Total_Marks\nFROM student_table;"],
+[35,"Sorting & Limit","Display the top 2 students with the highest marks.","SELECT *\nFROM student_table\nORDER BY marks DESC\nLIMIT 2;"]
+];
+const $=id=>document.getElementById(id);
+let done={},cat="All",hide=false,order=Q.map(q=>q[0]);
+try{done=JSON.parse(localStorage.getItem("sqlDone")||"{}")}catch(e){}
+const save=()=>{try{localStorage.setItem("sqlDone",JSON.stringify(done))}catch(e){}};
+const esc=s=>s.replace(/&/g,"&amp;").replace(/</g,"&lt;");
+const norm=s=>s.toLowerCase().replace(/"/g,"'").replace(/;/g,"").replace(/\s*([(),=<>*])\s*/g,"$1").replace(/\s+/g," ").trim();
+const cats=["All",...new Set(Q.map(q=>q[1]))];
+$("chips").innerHTML=cats.map(c=>`<button class="chip${c=="All"?" on":""}" data-c="${c}">${c}</button>`).join("");
+$("chips").onclick=e=>{const c=e.target.dataset.c;if(!c)return;cat=c;[...$("chips").children].forEach(b=>b.classList.toggle("on",b.dataset.c==c));render()};
+$("s").oninput=render;
+$("sh").onclick=()=>{order.sort(()=>Math.random()-.5);render()};
+$("hd").onclick=()=>{hide=!hide;$("hd").textContent=hide?"Show done":"Hide done";render()};
+$("rs").onclick=()=>{done={};save();render()};
+function prog(){const n=Object.keys(done).length;$("pb").style.width=n/Q.length*100+"%";$("pt").textContent=n+" / "+Q.length+" mastered"+(n==Q.length?" 🎉":"")}
+function render(){
+  const t=$("s").value.toLowerCase();
+  $("list").innerHTML=order.map(id=>Q.find(q=>q[0]==id)).filter(q=>(cat=="All"||q[1]==cat)&&(!t||(q[2]+q[3]).toLowerCase().includes(t))&&!(hide&&done[q[0]])).map(q=>`
+  <div class="card${done[q[0]]?" done":""}" data-i="${q[0]}">
+    <div class="q"><span class="n">${q[0]}</span><p>${esc(q[2])}<br><span class="tag">${q[1]}</span></p></div>
+    <textarea placeholder="Type your SQL here…" spellcheck="false"></textarea>
+    <div class="row"><button class="p" data-a="chk">Check</button><button data-a="rev">Show answer</button><button data-a="dn">${done[q[0]]?"✓ Mastered":"Mark mastered"}</button></div>
+    <div class="msg"></div><div class="ans"></div></div>`).join("")||'<p class="note">No questions match.</p>';
+  prog();
+}
+$("list").onclick=e=>{
+  const a=e.target.dataset.a;if(!a)return;
+  const c=e.target.closest(".card"),q=Q.find(x=>x[0]==c.dataset.i),m=c.querySelector(".msg"),an=c.querySelector(".ans");
+  const show=()=>an.innerHTML="<pre>"+esc(q[3])+"</pre>";
+  if(a=="rev")show();
+  if(a=="chk"){const v=c.querySelector("textarea").value;
+    if(!v.trim()){m.innerHTML='<span class="warn">Write a query first, or use “Show answer”.</span>';return}
+    if(q[0]==2){m.innerHTML='<span class="warn">Compare your query with the model answer below.</span>';show();return}
+    if(norm(v)==norm(q[3])){m.innerHTML='<span class="good">✅ Correct! Well done.</span>';show();done[q[0]]=1;save();prog();c.classList.add("done")}
+    else{m.innerHTML='<span class="bad">❌ Wrong. Check your query against the correct answer below and try again.</span>';show()}}
+  if(a=="dn"){done[q[0]]?delete done[q[0]]:done[q[0]]=1;save();c.classList.toggle("done",!!done[q[0]]);e.target.textContent=done[q[0]]?"✓ Mastered":"Mark mastered";prog()}
+};
+render();
+</script>
+<footer style="font-family: 'Courier New', Courier, monospace; font-size: small; padding-bottom: 20px;">
+  <center>
+    Powered by Mithili S Kakodkar
+  </center>
+</footer>
+</body></html>
