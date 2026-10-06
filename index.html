@@ -67,7 +67,7 @@ CREATE TABLE new AS SELECT * FROM old;  DROP TABLE t;  RENAME TABLE a TO b;  DES
 </div>
 <script>
 const Q=[
-[1,"Create Table","Create a table named student_table with: stuid INT, name VARCHAR(30), address VARCHAR(50), city VARCHAR(20), marks INT, course VARCHAR(20).","CREATE TABLE student_table\n(\n    stuid INT,\n    name VARCHAR(30),\n    address VARCHAR(50),\n    city VARCHAR(20),\n    marks INT,\n    course VARCHAR(20)\n);"],
+[1,"Create Table","Create a table with above info.","CREATE TABLE student_table\n(\n    stuid INT,\n    name VARCHAR(30),\n    address VARCHAR(50),\n    city VARCHAR(20),\n    marks INT,\n    course VARCHAR(20)\n);"],
 [2,"Create Table","Insert the 5 sample records (shown above) into student_table.","INSERT INTO student_table\nVALUES\n(1, 'Divya', 'Main Road', 'Curchorem', 92, 'CT'),\n(5, 'Ashwin', 'Station Road', 'Sanguem', 85, 'Commerce'),\n(10, 'Diena', 'Church Street', 'Calcutta', 65, 'Science'),\n(15, 'Sufiyan', 'Pontemol', 'Curchorem', 78, 'CT'),\n(20, 'Andric', 'College Road', 'Sanguem', 55, 'Science');"],
 [3,"SELECT","Display all records from the table.","SELECT * FROM student_table;"],
 [4,"SELECT","Display the names and marks of all students.","SELECT name, marks\nFROM student_table;"],
