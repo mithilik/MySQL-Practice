@@ -48,9 +48,9 @@ details summary{cursor:pointer;font-weight:600}
 <div class="scroll"><table><tr><th>stuid</th><th>name</th><th>address</th><th>city</th><th>marks</th><th>course</th></tr>
 <tr><td>1</td><td>Divya</td><td>Main Road</td><td>Curchorem</td><td>92</td><td>CT</td></tr>
 <tr><td>5</td><td>Ashwin</td><td>Station Road</td><td>Sanguem</td><td>85</td><td>Commerce</td></tr>
-<tr><td>10</td><td>Diena</td><td>Church Street</td><td>Calcutta</td><td>65</td><td>Science</td></tr>
+<tr><td>10</td><td>Diena</td><td>Church Street</td><td>Calcutta</td><td>95</td><td>Science</td></tr>
 <tr><td>15</td><td>Sufiyan</td><td>Pontemol</td><td>Curchorem</td><td>78</td><td>CT</td></tr>
-<tr><td>20</td><td>Andric</td><td>College Road</td><td>Sanguem</td><td>55</td><td>Science</td></tr></table></div></details></div>
+<tr><td>20</td><td>Andric</td><td>College Road</td><td>Sanguem</td><td>75</td><td>Science</td></tr></table></div></details></div>
 
 <div class="card"><details><summary>⚡ Quick revision cheat sheet</summary>
 <pre>SELECT col FROM t WHERE cond GROUP BY col HAVING cond ORDER BY col [ASC|DESC] LIMIT n;
@@ -68,7 +68,7 @@ CREATE TABLE new AS SELECT * FROM old;  DROP TABLE t;  RENAME TABLE a TO b;  DES
 <script>
 const Q=[
 [1,"Create Table","Create a table with above info.","CREATE TABLE student_table\n(\n    stuid INT,\n    name VARCHAR(30),\n    address VARCHAR(50),\n    city VARCHAR(20),\n    marks INT,\n    course VARCHAR(20)\n);"],
-[2,"Create Table","Insert the 5 sample records (shown above) into student_table.","INSERT INTO student_table\nVALUES\n(1, 'Divya', 'Main Road', 'Curchorem', 92, 'CT'),\n(5, 'Ashwin', 'Station Road', 'Sanguem', 85, 'Commerce'),\n(10, 'Diena', 'Church Street', 'Calcutta', 65, 'Science'),\n(15, 'Sufiyan', 'Pontemol', 'Curchorem', 78, 'CT'),\n(20, 'Andric', 'College Road', 'Sanguem', 55, 'Science');"],
+[2,"Create Table","Insert the 5 sample records (shown above) into student_table.","INSERT INTO student_table\nVALUES\n(1, 'Divya', 'Main Road', 'Curchorem', 92, 'CT'),\n(5, 'Ashwin', 'Station Road', 'Sanguem', 85, 'Commerce'),\n(10, 'Diena', 'Church Street', 'Calcutta', 95, 'Science'),\n(15, 'Sufiyan', 'Pontemol', 'Curchorem', 78, 'CT'),\n(20, 'Andric', 'College Road', 'Sanguem', 75, 'Science');"],
 [3,"SELECT","Display all records from the table.","SELECT * FROM student_table;"],
 [4,"SELECT","Display the names and marks of all students.","SELECT name, marks\nFROM student_table;"],
 [5,"Filtering","Display students whose marks are between 60 and 80.","SELECT *\nFROM student_table\nWHERE marks BETWEEN 60 AND 80;"],
@@ -91,7 +91,7 @@ const Q=[
 [22,"Alter & Tables","Remove the address field from the table.","ALTER TABLE student_table\nDROP COLUMN address;"],
 [23,"Alter & Tables","Copy the complete student_table into a new table called student_backup.","CREATE TABLE student_backup\nAS\nSELECT *\nFROM student_table;"],
 [24,"Alter & Tables","Remove the table student_backup.","DROP TABLE student_backup;"],
-[25,"Alter & Tables","Display the structure of student_table.","DESC student_table;"],
+[25,"Alter & Tables","Display the structure of student_table.","DESCRIBE student_table;"],
 [26,"Alter & Tables","Change the table name from student_table to student_master.","RENAME TABLE student_table\nTO student_master;"],
 [27,"Alter & Tables","Change the datatype of the name field to VARCHAR(40).","ALTER TABLE student_table\nMODIFY name VARCHAR(40);"],
 [28,"Filtering","Display students who are from Curchorem and have marks greater than 70.","SELECT *\nFROM student_table\nWHERE city = 'Curchorem'\nAND marks > 70;"],
