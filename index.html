@@ -67,7 +67,7 @@ CREATE TABLE new AS SELECT * FROM old;  DROP TABLE t;  RENAME TABLE a TO b;  DES
 </div>
 <script>
 const Q=[
-[1,"Create Table","Create a table with above info.","CREATE TABLE student_table\n(\n    stuid INT,\n    name VARCHAR(30),\n    address VARCHAR(50),\n    city VARCHAR(20),\n    marks INT,\n    course VARCHAR(20)\n);"],
+[1,"Create Table","Create a table with above info.","CREATE TABLE student_table\n(\n    stuid INT PRIMARY KEY,\n    name VARCHAR(30),\n    address VARCHAR(50),\n    city VARCHAR(20),\n    marks INT,\n    course VARCHAR(20)\n);"],
 [2,"Create Table","Insert the 5 sample records (shown above) into student_table.","INSERT INTO student_table\nVALUES\n(1, 'Divya', 'Main Road', 'Curchorem', 92, 'CT'),\n(5, 'Ashwin', 'Station Road', 'Sanguem', 85, 'Commerce'),\n(10, 'Diena', 'Church Street', 'Calcutta', 95, 'Science'),\n(15, 'Sufiyan', 'Pontemol', 'Curchorem', 78, 'CT'),\n(20, 'Andric', 'College Road', 'Sanguem', 75, 'Science');"],
 [3,"SELECT","Display all records from the table.","SELECT * FROM student_table;"],
 [4,"SELECT","Display the names and marks of all students.","SELECT name, marks\nFROM student_table;"],
@@ -136,7 +136,7 @@ $("list").onclick=e=>{
     if(!v.trim()){m.innerHTML='<span class="warn">Write a query first, or use “Show answer”.</span>';return}
     if(q[0]==2){m.innerHTML='<span class="warn">Compare your query with the model answer below.</span>';show();return}
     if(norm(v)==norm(q[3])){m.innerHTML='<span class="good">✅ Correct! Well done.</span>';show();done[q[0]]=1;save();prog();c.classList.add("done")}
-    else{m.innerHTML='<span class="bad">❌ Wrong. Check your query against the correct answer below and try again.</span>';show()}}
+    else{m.innerHTML='<span class="bad">❌ Slight Correction Needed. Check your query against the correct answer below and try again.</span>';show()}}
   if(a=="dn"){done[q[0]]?delete done[q[0]]:done[q[0]]=1;save();c.classList.toggle("done",!!done[q[0]]);e.target.textContent=done[q[0]]?"✓ Mastered":"Mark mastered";prog()}
 };
 render();
